@@ -1,5 +1,5 @@
 # DAMG 7245 Big-Data Systems and Intelligence Analytics 
-###This repository consists of Assignments and coursework of DAMG 7245 subject
+### This repository consists of Assignments and coursework of DAMG 7245 subject
 
 #### Team 2  Information:
 

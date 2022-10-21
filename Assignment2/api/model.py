@@ -106,16 +106,24 @@ column_names = ['q000_ir','q001_ir',
  'q099_vl',
  'q100_vl']
 
-X_df = pd.DataFrame(X_test,columns=column_names)
-print(X_df.head())
+# X_df = pd.DataFrame(X_test,columns=column_names)
+# print(X_df.head())
 
+
+path= 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/models/modelLinearRegression.pkl'
+loaded_model = pickle.load(open(path, 'rb'))
    
 @app.post("/predict/")
 def model_predict(data:Sevir_data):
-    path= 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/models/modelLinearRegression.pkl'
-    loaded_model = pickle.load(open(path, 'rb'))
-    y_pred = loaded_model.predict(X_df.iloc[1].values.reshape(1,-1))
+    dict= data.dict()
+    # y_values= np.array([[3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46]]).reshape(1,-1).T
+    y_pred = loaded_model.predict(X_validate[:])
+    
+    # y_pred = loaded_model.predict(y_values)
+    y_pred
+    # print(y_pred)
     # y_pred = loaded_model.predict(pd.DataFrame((data)).values.reshape(-1,1))
-    yo = (y_test[1])
+    # yo = (y_test[1])
     # result = loaded_model.score(X_test, y_test)
     return {"predictions":list(y_pred)}
+

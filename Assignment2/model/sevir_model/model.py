@@ -22,18 +22,18 @@ app = FastAPI()
 
 
 
-print("1 column",X_train.shape)
-print("Selects first row",X_train[0])
-print("Selects second row, first column, x_train",X_train[1][0])
-print("Selects second row, first column,y_train",y_train[1])
-print("xtrain dtype",X_train.dtype )
-print("type of X_train",type(X_train))
+# print("1 column",X_train.shape)
+# print("Selects first row",X_train[0])
+# print("Selects second row, first column, x_train",X_train[1][0])
+# print("Selects second row, first column,y_train",y_train[1])
+# print("xtrain dtype",X_train.dtype )
+# print("type of X_train",type(X_train))
 
-print("Max value in X_train",X_train.max())
+# print("Max value in X_train",X_train.max())
 
-@app.get('/')
-def index():
-    return {'X_train max': X_train.max()}
+# @app.get('/')
+# def index():
+#     return {'X_train max': X_train.max()}
 
 
 

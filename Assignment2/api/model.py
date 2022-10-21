@@ -1,9 +1,15 @@
+import array
 import pickle
+import random
 from typing import Optional
 from fastapi import FastAPI
 import uvicorn
 import numpy as np
 import pandas as pd
+import matplotlib as plt
+
+# two dimensional example
+from numpy import array
 
 
 from pydantic import BaseModel
@@ -112,17 +118,35 @@ column_names = ['q000_ir','q001_ir',
 
 path= 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/models/modelLinearRegression.pkl'
 loaded_model = pickle.load(open(path, 'rb'))
+
+yhat = loaded_model.predict(X_validate)
+
+
+#make figure  
+fig = plt.figure(figsize=(5,5))
+#set background color to white so we can copy paste out of the notebook if we want 
+fig.set_facecolor('w')
+
+#get axis for drawing
+ax = plt.gca()
+
+#plot data 
+ax.scatter(yhat,y_validate,color=random,s=1,marker='+')
+ax.plot([0,3500],[0,3500],'-k')
+ax.set_xlabel('ML Prediction, [$number of flashes$]')
+ax.set_xlabel('GLM measurement, [$number of flashes$]')
+ax.savefig('/images/y_pred.png')
    
 @app.post("/predict/")
 def model_predict(data:Sevir_data):
     dict= data.dict()
-    # y_values= np.array([[3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46]]).reshape(1,-1).T
-    y_pred = loaded_model.predict(X_validate[:])
+    y_values= array([3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,3.2]).reshape(1,-1)
+    # y_pred = loaded_model.predict(X_validate[:])
     
     # y_pred = loaded_model.predict(y_values)
-    y_pred
+    # y_pred
     # print(y_pred)
-    # y_pred = loaded_model.predict(pd.DataFrame((data)).values.reshape(-1,1))
+    y_pred = loaded_model.predict(y_values)
     # yo = (y_test[1])
     # result = loaded_model.score(X_test, y_test)
     return {"predictions":list(y_pred)}

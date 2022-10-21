@@ -10,7 +10,7 @@ from fastapi import FastAPI
 #import some helper functions for our other directory.
 import sys
 print(sys.path)
-sys.path.insert(1, 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/scripts')
+sys.path.insert(1, 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/scripts/')
 from aux_functions import load_n_combine_df
 (X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/data/sevir/',features_to_keep=np.arange(0,1,1),class_labels=False)
 
@@ -88,5 +88,5 @@ savefile = open(start_path + name,'wb')
 pickle.dump(model,savefile)
 
 
-if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+# if __name__ == '__main__':
+#     uvicorn.run(app, host='127.0.0.1', port=8000)

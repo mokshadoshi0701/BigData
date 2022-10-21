@@ -21,3 +21,7 @@ In this repository, for the assignment we included source code, data and a repor
 * Created data-as-a-service by using Fast API that can retrieve samples of different kinds from the dataset and designed five functions for that dataset
 
 * Developed Model as a service for Linear Regression Model by passing in the inputs and getting prediction as an output
+
+* Measured the Performance of the model 
+
+* Test cases are written for the FastAPI using pytest

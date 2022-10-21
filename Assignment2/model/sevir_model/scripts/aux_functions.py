@@ -1,4 +1,4 @@
--""" 
+""" 
 Description:
 -----------
 This script hosts many helper functions to make notebooks cleaner. The hope is to not distract users with ugly code. 

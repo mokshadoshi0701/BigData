@@ -13,14 +13,16 @@ import matplotlib.pyplot as plt
 import uvicorn
 from fastapi import FastAPI
 
-catalog = pd.read_csv('M:\BigData\BigData\Assignment2\model\sevir_model\data\sevir\CATALOG.csv',parse_dates=['time_utc'],low_memory=False)
-print(catalog.head(5))
+
 
 app = FastAPI()
 
+catalog = pd.read_csv('E:\DAMG_7245_BigData\BigData\Assignment2\model\sevir_model\data\sevir\CATALOG.csv',parse_dates=['time_utc'],low_memory=False)
+print(catalog.head(5))
+
 @app.get('/')
 def index():
-    return("Hello World")
+    return {"message": "Hello World"}
 
 #Finding files by event id
 @app.get("/event-id/{event_no}")
@@ -33,7 +35,7 @@ def get_event_id(event_no: int):
 @app.get("/{modality_name}")
 def get_modality(modality_name: str):
     e= list(catalog[catalog.img_type == modality_name].file_name)
-    return {str(len(e))+' related files found': e}
+    return {str(len(e))+' related files found'}
 
 
 #func2

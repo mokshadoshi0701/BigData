@@ -7,6 +7,7 @@ import uvicorn
 import numpy as np
 import pandas as pd
 import matplotlib as plt
+import joblib
 
 # two dimensional example
 from numpy import array
@@ -53,20 +54,6 @@ class Sevir_data(BaseModel):
     q099_vl: float
     q100_vl: float
  
-
-# {
-#   "q000": -61.31,
-#   "q001": -59.45,
-#   "q010": -55.30,
-#   "q025": -52.59,
-#   "q050": -47.00,
-#   "q075": -36.92,
-#   "q090": -26.560,
-#   "q099": -4.4163,
-#   "q100": 15.19
-# }
-
-# Thunderstorm Wind
 
 app = FastAPI()
 
@@ -117,37 +104,51 @@ column_names = ['q000_ir','q001_ir',
 
 
 path= 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/models/modelLinearRegression.pkl'
-loaded_model = pickle.load(open(path, 'rb'))
-
-yhat = loaded_model.predict(X_validate)
+loaded_model = joblib.load(open(path, 'rb'))
 
 
-#make figure  
-fig = plt.figure(figsize=(5,5))
-#set background color to white so we can copy paste out of the notebook if we want 
-fig.set_facecolor('w')
+def pred(X_validate,y_validate):
 
-#get axis for drawing
-ax = plt.gca()
+    yhat = loaded_model.predict(X_validate)
+    mae = np.mean(np.abs(y_validate-yhat))
+    rmse = np.sqrt(np.mean((y_validate-yhat)**2))
+    bias = np.mean(y_validate-yhat)
+    r2 = 1 - (np.sum((y_validate-yhat)**2))/(np.sum((y_validate-np.mean(y_validate))**2))
 
-#plot data 
-ax.scatter(yhat,y_validate,color=random,s=1,marker='+')
-ax.plot([0,3500],[0,3500],'-k')
-ax.set_xlabel('ML Prediction, [$number of flashes$]')
-ax.set_xlabel('GLM measurement, [$number of flashes$]')
-ax.savefig('/images/y_pred.png')
+    out= 'MAE:{} flashes, RMSE:{} flashes, Bias:{} flashes, Rsquared:{}'.format(np.round(mae,2),np.round(rmse,2),np.round(bias,2),np.round(r2,2))
+    return out
+
+@app.get('/')
+def hello_world():
+    return {"Predction Scores:" : pred(X_validate,y_validate)}
+
+
+# #make figure  
+# fig = plt.figure(figsize=(5,5))
+# #set background color to white so we can copy paste out of the notebook if we want 
+# fig.set_facecolor('w')
+
+# #get axis for drawing
+# ax = plt.gca()
+
+# #plot data 
+# ax.scatter(yhat,y_validate,color=random,s=1,marker='+')
+# ax.plot([0,3500],[0,3500],'-k')
+# ax.set_xlabel('ML Prediction, [$number of flashes$]')
+# ax.set_xlabel('GLM measurement, [$number of flashes$]')
+# ax.savefig('/images/y_pred.png')
    
-@app.post("/predict/")
-def model_predict(data:Sevir_data):
-    dict= data.dict()
-    y_values= array([3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,3.2]).reshape(1,-1)
-    # y_pred = loaded_model.predict(X_validate[:])
+# @app.post("/predict/")
+# def model_predict(data:Sevir_data):
+#     dict= data.dict()
+#     y_values= array([3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,3.2]).reshape(1,-1)
+#     # y_pred = loaded_model.predict(X_validate[:])
     
-    # y_pred = loaded_model.predict(y_values)
-    # y_pred
-    # print(y_pred)
-    y_pred = loaded_model.predict(y_values)
-    # yo = (y_test[1])
-    # result = loaded_model.score(X_test, y_test)
-    return {"predictions":list(y_pred)}
+#     # y_pred = loaded_model.predict(y_values)
+#     # y_pred
+#     # print(y_pred)
+#     y_pred = loaded_model.predict(y_values)
+#     # yo = (y_test[1])
+#     # result = loaded_model.score(X_test, y_test)
+#     return {"predictions":list(y_pred)}
 

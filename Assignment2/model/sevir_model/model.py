@@ -3,9 +3,18 @@ import xarray as xr
 import matplotlib.pyplot as plt 
 import numpy as np
 import pandas as pd
+import joblib
 
 import uvicorn
 from fastapi import FastAPI
+
+
+import boto3
+from botocore.handlers import disable_signing
+resource = boto3.resource('s3')
+resource.meta.client.meta.events.register('choose-signer.s3.*', disable_signing)
+bucket=resource.Bucket('sevir_bigdata/data/sevir')
+
 
 #import some helper functions for our other directory.
 import sys
@@ -85,7 +94,7 @@ import pickle
 name = 'LinearRegression.pkl'
 start_path = 'E:\DAMG_7245_BigData\BigData\Assignment2\model\sevir_model\models\model'
 savefile = open(start_path + name,'wb')
-pickle.dump(model,savefile)
+joblib.dump(model,savefile)
 
 
 # if __name__ == '__main__':

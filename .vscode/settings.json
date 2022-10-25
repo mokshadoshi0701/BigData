@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./Assignment2/model/sevir_model/scripts"
+        "./Assignment2/model/sevir_model/scripts",
+        "./Assignment2/model/sevir_model"
     ]
 }

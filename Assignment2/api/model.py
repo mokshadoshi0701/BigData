@@ -15,44 +15,44 @@ from numpy import array
 
 from pydantic import BaseModel
 
-class Sevir_data(BaseModel):
-    q000_ir: float
-    q001_ir: float
-    q010_ir: float
-    q025_ir: float
-    q050_ir: float
-    q075_ir: float
-    q090_ir: float
-    q099_ir: float
-    q100_ir: float
-    q000_wv: float
-    q001_wv: float
-    q010_wv: float
-    q025_wv: float
-    q050_wv: float
-    q075_wv: float
-    q090_wv: float
-    q099_wv: float
-    q100_wv: float
+# class Sevir_data(BaseModel):
+#     q000_ir: float
+#     q001_ir: float
+#     q010_ir: float
+#     q025_ir: float
+#     q050_ir: float
+#     q075_ir: float
+#     q090_ir: float
+#     q099_ir: float
+#     q100_ir: float
+#     q000_wv: float
+#     q001_wv: float
+#     q010_wv: float
+#     q025_wv: float
+#     q050_wv: float
+#     q075_wv: float
+#     q090_wv: float
+#     q099_wv: float
+#     q100_wv: float
 
-    q000_vi: float
-    q001_vi: float
-    q010_vi: float
-    q025_vi: float
-    q050_vi: float
-    q075_vi: float
-    q090_vi: float
-    q099_vi: float
-    q100_vi: float
-    q000_vl: float
-    q001_vl: float
-    q010_vl: float
-    q025_vl: float
-    q050_vl: float
-    q075_vl: float
-    q090_vl: float
-    q099_vl: float
-    q100_vl: float
+#     q000_vi: float
+#     q001_vi: float
+#     q010_vi: float
+#     q025_vi: float
+#     q050_vi: float
+#     q075_vi: float
+#     q090_vi: float
+#     q099_vi: float
+#     q100_vi: float
+#     q000_vl: float
+#     q001_vl: float
+#     q010_vl: float
+#     q025_vl: float
+#     q050_vl: float
+#     q075_vl: float
+#     q090_vl: float
+#     q099_vl: float
+#     q100_vl: float
  
 
 app = FastAPI()
@@ -61,7 +61,7 @@ import sys
 print(sys.path)
 sys.path.insert(1, 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/scripts/')
 from aux_functions import load_n_combine_df
-(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/data/sevir/',features_to_keep=np.arange(0,36,1),class_labels=False)
+(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/data/sevir/',features_to_keep=np.arange(0,1,1),class_labels=False)
 
 column_names = ['q000_ir','q001_ir',
  'q010_ir',
@@ -118,8 +118,8 @@ def pred(X_validate,y_validate):
     out= 'MAE:{} flashes, RMSE:{} flashes, Bias:{} flashes, Rsquared:{}'.format(np.round(mae,2),np.round(rmse,2),np.round(bias,2),np.round(r2,2))
     return out
 
-@app.get('/')
-def hello_world():
+@app.get('/scores')
+def prediction():
     return {"Predction Scores:" : pred(X_validate,y_validate)}
 
 
@@ -138,17 +138,17 @@ def hello_world():
 # ax.set_xlabel('GLM measurement, [$number of flashes$]')
 # ax.savefig('/images/y_pred.png')
    
-# @app.post("/predict/")
-# def model_predict(data:Sevir_data):
-#     dict= data.dict()
-#     y_values= array([3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,3.4,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,32.425,245.4,4.2,5.64,24.24,245.24,4.2,24.24,24.4,6.46,3.2]).reshape(1,-1)
-#     # y_pred = loaded_model.predict(X_validate[:])
+@app.post("/predict/{input}")
+def model_predict(input:float):
+    # dict= data.dict()
+    y_values= array([input]).reshape(-1,1)
+    # y_pred = loaded_model.predict(X_validate[:])
     
-#     # y_pred = loaded_model.predict(y_values)
-#     # y_pred
-#     # print(y_pred)
-#     y_pred = loaded_model.predict(y_values)
-#     # yo = (y_test[1])
-#     # result = loaded_model.score(X_test, y_test)
-#     return {"predictions":list(y_pred)}
+    # y_pred = loaded_model.predict(y_values)
+    # y_pred
+    # print(y_pred)
+    y_pred = loaded_model.predict(y_values)
+    # yo = (y_test[1])
+    # result = loaded_model.score(X_test, y_test)
+    return {"predictions":list(y_pred)}
 

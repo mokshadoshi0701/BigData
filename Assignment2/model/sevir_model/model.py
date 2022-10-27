@@ -3,9 +3,18 @@ import xarray as xr
 import matplotlib.pyplot as plt 
 import numpy as np
 import pandas as pd
+import joblib
 
 import uvicorn
 from fastapi import FastAPI
+
+
+import boto3
+from botocore.handlers import disable_signing
+resource = boto3.resource('s3')
+resource.meta.client.meta.events.register('choose-signer.s3.*', disable_signing)
+bucket=resource.Bucket('sevir_bigdata/data/sevir')
+
 
 #import some helper functions for our other directory.
 import sys
@@ -56,7 +65,7 @@ model1 = model.fit(X_train,y_train)
 # along the diagonal. 
 
 #get predictions 
-yhat = model.predict(X_validate)
+# yhat = model.predict(X_validate)
 
 ####uncomment to remove zeroes
 # (X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/data/sevir/',features_to_keep=np.arange(0,1,1),class_labels=False,dropzeros=True)
@@ -69,23 +78,23 @@ yhat = model.predict(X_validate)
 # #get predictions 
 # yhat2 = model2.predict(X_validate)
 
-from gewitter_functions import get_mae,get_rmse,get_bias,get_r2
+# from gewitter_functions import get_mae,get_rmse,get_bias,get_r2
 
-yhat = model.predict(X_validate)
-mae = get_mae(y_validate,yhat)
-rmse = get_rmse(y_validate,yhat)
-bias = get_bias(y_validate,yhat)
-r2 = get_r2(y_validate,yhat)
+# yhat = model.predict(X_validate)
+# mae = get_mae(y_validate,yhat)
+# rmse = get_rmse(y_validate,yhat)
+# bias = get_bias(y_validate,yhat)
+# r2 = get_r2(y_validate,yhat)
 
-#print them out so we can see them 
-print('MAE:{} flashes, RMSE:{} flashes, Bias:{} flashes, Rsquared:{}'.format(np.round(mae,2),np.round(rmse,2),np.round(bias,2),np.round(r2,2)))
+# #print them out so we can see them 
+# print('MAE:{} flashes, RMSE:{} flashes, Bias:{} flashes, Rsquared:{}'.format(np.round(mae,2),np.round(rmse,2),np.round(bias,2),np.round(r2,2)))
 
 
-import pickle
+# import pickle
 name = 'LinearRegression.pkl'
 start_path = 'E:\DAMG_7245_BigData\BigData\Assignment2\model\sevir_model\models\model'
 savefile = open(start_path + name,'wb')
-pickle.dump(model,savefile)
+joblib.dump(model,savefile)
 
 
 # if __name__ == '__main__':

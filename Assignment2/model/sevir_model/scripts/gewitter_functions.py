@@ -8,6 +8,7 @@ Alot of these were sourced from Dr. Lagerquist and found originally in his gewit
 """
 
 #additional libraries needed here
+from decimal import Rounded
 import scipy.stats as st 
 import copy 
 import sklearn
@@ -325,7 +326,7 @@ def get_binarization_thresholds(
 
             raise ValueError(error_string)
 
-        binarization_thresholds = np.unique(rounder.round_to_nearest(
+        binarization_thresholds = np.unique(Rounded.round_to_nearest(
             forecast_probabilities + 0., forecast_precision
         ))
 

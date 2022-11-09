@@ -1,10 +1,10 @@
 FROM python:3.9.4
 
-WORKDIR /opt/car_evaluation_streamlit
+WORKDIR /opt/streamlit
 
-ADD ./car_evaluation_streamlit /opt/car_evaluation_streamlit
+ADD ./streamlit /opt/streamlit
 RUN pip install --upgrade pip
-RUN pip install -r /opt/car_evaluation_streamlit/requirements.txt
+RUN pip install -r /opt/streamlit/requirements.txt
 
 EXPOSE 8501
 

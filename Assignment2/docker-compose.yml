@@ -1,18 +1,18 @@
 version: '3'
 
 services:
-  sevir_streamlit:
+  streamlit:
     build: 
         context: .
-        dockerfile: streamlit/Dockerfile
+        dockerfile: streamlit\Dockerfile
     ports:
       - 8501:8501
     depends_on:
       - api
 
-  car_evaluation_api:
+  api:
     build:
         context: .
-        dockerfile: api/Dockerfile
+        dockerfile: api\Dockerfile
     ports:
       - 8001:8001

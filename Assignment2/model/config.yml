@@ -1,5 +1,5 @@
 # Package name
-package_name: car_evaluation_model
+package_name: sevir
 
 # Pipeline name 
 pipeline_name: car_evaluation_model

@@ -10,44 +10,6 @@ from fastapi.responses import FileResponse
 
 from pydantic import BaseModel
 
-class Sevir_data(BaseModel):
-    q000_ir: float
-    q001_ir: float
-    q010_ir: float
-    q025_ir: float
-    q050_ir: float
-    q075_ir: float
-    q090_ir: float
-    q099_ir: float
-    q100_ir: float
-    q000_wv: float
-    q001_wv: float
-    q010_wv: float
-    q025_wv: float
-    q050_wv: float
-    q075_wv: float
-    q090_wv: float
-    q099_wv: float
-    q100_wv: float
-
-    q000_vi: float
-    q001_vi: float
-    q010_vi: float
-    q025_vi: float
-    q050_vi: float
-    q075_vi: float
-    q090_vi: float
-    q099_vi: float
-    q100_vi: float
-    q000_vl: float
-    q001_vl: float
-    q010_vl: float
-    q025_vl: float
-    q050_vl: float
-    q075_vl: float
-    q090_vl: float
-    q099_vl: float
-    q100_vl: float
  
 
 # {

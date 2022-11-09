@@ -11,3 +11,6 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 Assignment 1: Experiments with Big data
 **Google CodeLabs link - https://codelabs-preview.appspot.com/?file_id=1GZ55TZlfwKPYjTFppcshKY795A6U2XYtp4u0jz1cE5U#0**
+
+Assignment 2: Designing a Data as a service and Model as a service
+**Google CodeLabs link - https://codelabs-preview.appspot.com/?file_id=13LDRFzHkdT1LRMDgkFO2a664obm8JNQ63bBFNDRsWjc#0

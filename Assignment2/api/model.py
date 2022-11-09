@@ -15,6 +15,7 @@ from numpy import array
 
 from pydantic import BaseModel
 
+
 # class Sevir_data(BaseModel):
 #     q000_ir: float
 #     q001_ir: float

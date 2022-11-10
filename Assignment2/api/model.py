@@ -5,6 +5,7 @@ import uvicorn
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt 
+import joblib
 from fastapi.responses import FileResponse
 
 
@@ -75,16 +76,16 @@ column_names = ['q000_ir','q001_ir',
 
 
 path= 'M:/BigData/BigData/Assignment2/model/sevir_model/models/modelLinearRegression.pkl'
-loaded_model = pickle.load(open(path, 'rb'))
+loaded_model = joblib.load(open(path, 'rb'))
 
-model = loaded_model.fit(X_train,y_train)
+#model = loaded_model.fit(X_train,y_train)
    
 
 
 #get predictions 
 @app.get("/predicting/")
 def model_predict():
-    yhat = model.predict(X_validate)
+    yhat = loaded_model.predict(X_validate)
 
 #make figure  
     fig = plt.figure(figsize=(5,5))

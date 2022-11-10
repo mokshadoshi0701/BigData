@@ -6,6 +6,6 @@ ADD ./streamlit /opt/streamlit
 RUN pip install --upgrade pip
 RUN pip install -r /opt/streamlit/requirements.txt
 
-EXPOSE 8501
+EXPOSE 8505
 
 CMD ["streamlit", "run", "app.py"]

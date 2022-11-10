@@ -9,19 +9,13 @@ import uvicorn
 from fastapi import FastAPI
 
 
-import boto3
-from botocore.handlers import disable_signing
-resource = boto3.resource('s3')
-resource.meta.client.meta.events.register('choose-signer.s3.*', disable_signing)
-bucket=resource.Bucket('sevir_bigdata/data/sevir')
-
 
 #import some helper functions for our other directory.
 import sys
 print(sys.path)
-sys.path.insert(1, 'E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/scripts/')
+sys.path.insert(1, '../scripts/')
 from aux_functions import load_n_combine_df
-(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='E:/DAMG_7245_BigData/BigData/Assignment2/model/sevir_model/data/sevir/',features_to_keep=np.arange(0,1,1),class_labels=False)
+(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='../datasets/sevir/',features_to_keep=np.arange(0,1,1),class_labels=False)
 
 
 app = FastAPI()

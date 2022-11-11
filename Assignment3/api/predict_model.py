@@ -1,6 +1,6 @@
 import array
 # from random import random
-# import pickle
+import pickle
 # import random
 # from typing import Optional
 from fastapi import FastAPI
@@ -107,7 +107,7 @@ column_names = ['q000_ir','q001_ir',
 
 
 # path= 'LinearRegression.pkl'
-loaded_model = joblib.load(open('modelLinearRegression.pkl', 'rb'))
+loaded_model = pickle.load(open('modelLinearRegression.pkl', 'rb'))
 
 
 def pred(X_validate,y_validate):

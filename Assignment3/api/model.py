@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import joblib
-
+import pickle
 import uvicorn
 from fastapi import FastAPI
 
@@ -14,12 +14,15 @@ from fastapi import FastAPI
 
 #import some helper functions for our other directory.
 import sys
-print("-----------------",sys.path)
+# print("-----------------",sys.path)
 
-sys.path.insert(1, 'scripts/')
+sys.path.insert(1, 'C:/Users/moksh/OneDrive/BigData/Assignment3/api/scripts/')
 
-from scripts.aux_functions import load_n_combine_df
-(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='dataset/',features_to_keep=np.arange(0,1,1),class_labels=False)
+from aux_functions import load_n_combine_df
+(X_train,y_train),(X_validate,y_validate),(X_test,y_test) = load_n_combine_df(path_to_data='C:/Users/moksh/OneDrive/BigData/Assignment3/api/dataset/',features_to_keep=np.arange(0,1,1),class_labels=False)
+
+
+
 
 
 app = FastAPI()
@@ -50,10 +53,12 @@ from sklearn.linear_model import LinearRegression
 #initialize
 model = LinearRegression()
 
+
+
 # print(model)
 
 #train the model
-model1 = model.fit(X_train,y_train)
+modelfinal = model.fit(X_train,y_train)
 
 # Evaluate  ML model
 
@@ -91,8 +96,11 @@ model1 = model.fit(X_train,y_train)
 # import pickle
 # name = 'LinearRegression.pkl'
 # start_path = 'E:\DAMG_7245_BigData\BigData\Assignment2\model\sevir_model\models\model'
-savefile = open('model.pkl','wb')
-joblib.dump(model,savefile)
+
+# savefile = open('modelfinal.pkl','wb')
+# pickle.dump(model,savefile)
+
+pickle.dump(modelfinal, open('modelfinal.pkl','wb'))
 
 
 # if __name__ == '__main__':

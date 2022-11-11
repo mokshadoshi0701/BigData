@@ -14,3 +14,5 @@ matplotlib==3.6.2
 scikit_learn==0.22.1
 xarray==0.20.1
 Cython==0.29.32
+pandas_profiling
+streamlit_pandas_profiling

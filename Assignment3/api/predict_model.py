@@ -212,3 +212,5 @@ def model_predict(input:float,current_user: User = Depends(get_current_active_us
    
     return {"predictions":list(y_pred)}
 
+
+

@@ -1,35 +1,40 @@
 import numpy as np
-import pickle
+from numpy import array
 import pandas as pd
 import joblib
-#from flasgger import Swagger
 import streamlit as st 
-
+import random as ran
+from pathlib import Path
+import pandas_profiling
+from streamlit_pandas_profiling import st_profile_report
 from PIL import Image
 
-#app=Flask(__name__)
-#Swagger(app)
+
 
 # interact with FastAPI endpoint
-backend = "http://api:8001/predict_model"
+backend = "http://api:8005/predict_model"
 
 
 pickle_in = open("modelLinearRegression.pkl","rb")
 reg_model = joblib.load(pickle_in)
 
-#@app.route('/')
-def welcome():
-    return "Welcome All"
 
-#@app.route('/predict',methods=["Get"])
-def predict_flashes(X_validate):
-    prediction = reg_model.predict([[X_validate]])
+
+with st.sidebar: 
+    st.image("https://www.onepointltd.com/wp-content/uploads/2020/03/inno2.png")
+    st.title("UI interface for Model as a service")
+    choice = st.radio("Navigation", ["Home Page","Manually Checking Predictions","Profiling Any Dataset", "Model Performance"])
+    st.info("This project application helps you build and explore your data.")
+
+
+def predict_flashes(pixels):
+    inputs = pixels.split(',')
+    y_values= array([inputs]).reshape(-1,1)
+    prediction = reg_model.predict(y_values)
     print(prediction)
-    return prediction
+    return list(prediction)
 
-
-
-def main():
+if choice == "Home Page":
     st.title("Number of Flashes")
     html_temp = """
     <div style="background-color:tomato;padding:10px">
@@ -37,14 +42,41 @@ def main():
     </div>
     """
     st.markdown(html_temp,unsafe_allow_html=True)
-    flash_input = st.text_input("Enter Probability..X_validate","Type Here")
-    result=""
-    if st.button("Predict"):
-        result=predict_flashes(flash_input)
-    st.success('The output is {}'.format(result))
+
     if st.button("About"):
         st.text("Lets LEarn")
         st.text("Built with Streamlit")
 
-if __name__=='__main__':
-    main()
+
+if choice == "Manually Checking Predictions": 
+    st.info("You can now check flashes predictions by giving image pixels")
+    flash_input = st.text_input("Enter 9 pixel", key="{}")
+    result=""
+    if st.button("Predict"):
+        result= list(predict_flashes(flash_input))
+    
+    st.success('The output is {}'.format(result))
+
+
+if choice == "Profiling Any Dataset": 
+    st.title("Exploratory Data Analysis")
+    st.title("Upload Your Dataset")
+    file = st.file_uploader("Upload Your Dataset")
+    if file: 
+        df = pd.read_csv(file, index_col=None)
+      #  df.to_csv('dataset.csv', index=None)
+        st.dataframe(df)
+    profile_df = df.profile_report()
+    st_profile_report(profile_df)
+
+
+if choice == "Model Performance":  
+    if st.button("See Model Performance"):
+        image = Image.open('slr1.png')
+        st.image(image, caption='Sunrise by the mountains')
+
+
+
+
+
+

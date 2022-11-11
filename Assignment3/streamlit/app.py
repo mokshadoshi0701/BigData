@@ -35,7 +35,8 @@ def predict_flashes(pixels):
     return list(prediction)
 
 if choice == "Home Page":
-    st.title("Number of Flashes")
+    st.title("Basic training of a simple ML Regression model using a single feature/predictor/input")
+    st.title("This model will predict how many lightning flashes are present in a particular image")
     html_temp = """
     <div style="background-color:tomato;padding:10px">
     <h2 style="color:white;text-align:center;">Streamlit Model as a Service ML App </h2>
@@ -44,7 +45,7 @@ if choice == "Home Page":
     st.markdown(html_temp,unsafe_allow_html=True)
 
     if st.button("About"):
-        st.text("Lets LEarn")
+        st.text("Lets Learn")
         st.text("Built with Streamlit")
 
 
@@ -73,7 +74,8 @@ if choice == "Profiling Any Dataset":
 if choice == "Model Performance":  
     if st.button("See Model Performance"):
         image = Image.open('slr1.png')
-        st.image(image, caption='Sunrise by the mountains')
+        st.image(image, caption='Simple ML Regression')
+        st.info("You'll notice right here, there are ALOT of no flash images. You will see if we plot the number of flashes as a function of the minimum brightness temperature it might be very difficult to fit a linear method (i.e., Linear regression) to the data")
 
 
 

@@ -18,10 +18,10 @@
 
 In this repository, for the assignment we included source code, data and a report using codelabs while implementing the following:
 
-* Created data-as-a-service by using Fast API that can retrieve samples of different kinds from the dataset and designed five functions for that dataset
+* Used Great Expctations on catalog.csv
 
-* Developed Model as a service for Linear Regression Model by passing in the inputs and getting prediction as an output
+* Build a streamlit app to access the Model as a service 
 
-* Measured the Performance of the model 
+* Enhance the security of the fastapi with jwt tokens 
 
-* Test cases are written for the FastAPI using pytest
+* Dockerize the backend API as a service

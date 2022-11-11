@@ -18,7 +18,7 @@
 
 In this repository, for the assignment we included source code, data and a report using codelabs while implementing the following:
 
-* Used Great Expctations on catalog.csv
+* Used Great Expectations on catalog.csv
 
 * Build a streamlit app to access the Model as a service 
 

@@ -25,3 +25,8 @@ In this repository, for the assignment we included source code, data and a repor
 * Enhance the security of the fastapi with jwt tokens 
 
 * Dockerize the backend API as a service
+
+Hosted the Api on Heroku - https://sevir-assignment3.herokuapp.com/
+Hosted App on Streamlit - https://vyshnavi-pvr-damg7245-sevir-assignment3-streamlitapp-ekv4xg.streamlit.app/
+
+
